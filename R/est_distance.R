@@ -27,10 +27,10 @@
 #' @export
 est_distance <- function(ld, threshold = 0.3, k = 30) {
   # Fit an initial smoothing spline
-  init_gam <- mgcv::gam(R2 ~ s(Bin, k = k, bs = "cr"), data = ld)
+  init_gam <- mgcv::gam(R2 ~ mgcv::s(Bin, k = k, bs = "cr"), data = ld)
   
   # Estimate the penalized smooth based on the initial fit
-  sm <- mgcv::smoothCon(s(Bin, k = k, bs = "cr"), ld, knots = NULL)[[1]]
+  sm <- mgcv::smoothCon(mgcv::s(Bin, k = k, bs = "cr"), ld, knots = NULL)[[1]]
   mc <- mgcv::mono.con(sm$xp, up = FALSE)
   M <- list(X = sm$X, y = ld$R2, C = matrix(0, 0, 0), Ain = mc$A, 
             bin = mc$b, sp = init_gam$sp, p = -sm$xp, S = sm$S, 

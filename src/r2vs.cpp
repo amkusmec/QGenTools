@@ -57,6 +57,12 @@ DataFrame r2vs(NumericMatrix X, NumericMatrix V, NumericMatrix st) {
   MatrixXd Vi(as<MatrixXd>(FastMath::pinv(V)));
   MatrixXd S(as<MatrixXd>(st));
   
+  // Error checking
+  if (G.rows() != S.rows()) 
+    throw Rcpp::exception("X and st do not have the same number of rows.");
+  if (G.rows() != V.rows())
+    throw Rcpp::exception("X and V do not have the same number of rows.");
+  
   // Concatenate the genotypes and structure matrix
   MatrixXd GS(G.rows(), G.cols() + S.cols());
   GS << G, S;

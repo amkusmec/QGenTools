@@ -52,6 +52,10 @@ DataFrame r2v(NumericMatrix X, NumericMatrix V) {
   MatrixXd G(as<MatrixXd>(X));
   MatrixXd Vi(as<MatrixXd>(FastMath::pinv(V)));
   
+  // Error checking
+  if (G.rows() != V.rows())
+    throw Rcpp::exception("X and V do not have the same number of rows.");
+  
   // Calculate the relationship adjustment factor
   MatrixXd ones(MatrixXd::Ones(G.rows(), 1));
   MatrixXd num(ones*ones.transpose()*Vi);

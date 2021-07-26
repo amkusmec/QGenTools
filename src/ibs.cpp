@@ -52,7 +52,7 @@ NumericMatrix ibs(NumericMatrix X) {
   // Calculate identity-by-state
   NumericMatrix IBS(wrap((1/double(c))*(GGt + G2G2t)));
   rownames(IBS) = rownames(X);
-  colnames(IBS) = colnames(X);
+  colnames(IBS) = rownames(X);
   
   return IBS;
 }
